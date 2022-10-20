@@ -18,6 +18,6 @@ use controllers\CollectionController;
     
     require_once 'autoloader.php';
     Autoloader::register();
-    $test = new $controllerName($route);
-    $test2 = new ArtistController();
+    $test = new ArtistController($route);
+    
 ?>

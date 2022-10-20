@@ -6,7 +6,7 @@
     }
 
     static function autoload($params){
-        
+     
         require $params.".php";
     }
 
