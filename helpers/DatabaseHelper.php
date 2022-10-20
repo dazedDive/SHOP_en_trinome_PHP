@@ -1,6 +1,6 @@
 <?php namespace helpers;
 
-class MailerHelper {
+class DatabaseHelper {
 
 
 }
