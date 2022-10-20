@@ -2,6 +2,10 @@
 
 use controllers\ArtistController;
 use controllers\CollectionController;
+use controllers\CartController;
+use controllers\HomeController;
+use controllers\TopController;
+use controllers\AdminController;
 
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
