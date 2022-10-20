@@ -6,6 +6,11 @@ use controllers\CartController;
 use controllers\HomeController;
 use controllers\TopController;
 use controllers\AdminController;
+use Helpers\HttpRequest;
+use Helpers\HttpResponse;
+
+    $data = "OK";
+    HttpResponse::send(["data"=>$data]);
 
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
