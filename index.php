@@ -2,6 +2,7 @@
 
 use controllers\ArtistController;
 use controllers\CollectionController;
+use helpers\MailerHelper;
 
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -10,14 +11,16 @@ use controllers\CollectionController;
     $request = explode("/",$request);
     $route = array_shift($request);
        
-    $controller = ucfirst($route);
-    $controllerName = $controller."Controller";
+    // $controller = ucfirst($route);
+    // $controllerName = $controller."Controller";
     
     $method = $_SERVER['REQUEST_METHOD'];
     
     
     require_once 'autoloader.php';
     Autoloader::register();
+
     $test = new ArtistController($route);
-    
+    $test2 = new CollectionController();
+    $test3 = new MailerHelper();
 ?>
