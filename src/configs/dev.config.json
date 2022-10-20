@@ -1,0 +1,15 @@
+{
+    "db": {
+        "host": "localhost",
+        "port": "3306",
+        "dbName": "shop3.api",
+        "user": "admin",
+        "pass": "admin"
+    },
+    "hash": {
+        "prefix": ""
+    },
+    "jwt" : {
+        "secret": ""
+    }
+}
