@@ -20,8 +20,8 @@ use controllers\AdminController;
     $method = $_SERVER['REQUEST_METHOD'];
     
     
-    require_once 'autoloader.php';
-    Autoloader::register();
-    $test = new ArtistController($route);
+    require_once 'autoload.php';
+    Autoload::register();
+    $test = new ArtistController();
     
 ?>
