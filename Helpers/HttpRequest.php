@@ -6,12 +6,14 @@ class HttpRequest {
     
     private function __construct()
     {
-
-        $this->method = $_SERVER['REQUEST_METHOD'];
-        $request = trim($_SERVER['REQUEST_URI'],"/");
-        $request = filter_var($request , FILTER_SANITIZE_URL);
-        
-        $this->route=explode("/",$request);
+        $request = $_SERVER['REQUEST_METHOD'] . "/" . 
+        filter_var(trim($_SERVER["REQUEST_URI"], '/'), FILTER_SANITIZE_URL);
+        $requestArray = explode('/', $request);
+        $this->method = array_shift($requestArray);
+        if($_ENV['env'] == 'dev' && $_SERVER['HTTP_HOST'] == 'localhost'){
+        array_shift($requestArray);
+        }
+        $this->route = $requestArray;
 
     }
 
