@@ -1,5 +1,5 @@
 <?php
-namespace controllers;
+namespace Controllers;
 
 class DatabaseController{
     public function __construct($request){
