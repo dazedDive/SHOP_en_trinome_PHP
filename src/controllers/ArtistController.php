@@ -2,9 +2,11 @@
 
 namespace controllers;
 
-class DatabaseController
+class ArtistController
 {
+
     public function __construct()
     {
+        echo "Artist <br>";
     }
 }

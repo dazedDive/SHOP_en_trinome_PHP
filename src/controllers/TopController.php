@@ -2,9 +2,11 @@
 
 namespace controllers;
 
-class DatabaseController
+class TopController
 {
+
     public function __construct()
     {
+        echo "Top <br>";
     }
 }

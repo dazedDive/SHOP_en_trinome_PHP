@@ -2,9 +2,10 @@
 
 namespace controllers;
 
-class DatabaseController
+class CollectionController
 {
     public function __construct()
     {
+        echo "Collection <br>";
     }
 }

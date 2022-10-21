@@ -13,10 +13,10 @@ class HttpRequest
      */
     private function __construct()
     {
-        $method = [$_SERVER("REQUEST_METHOD")];
-        $route = explode('/', $_SERVER("REQUEST_URI"));
-        // $result = array_merge($method, $route);
-        // echo json_encode($result);
+        $this->method = $_SERVER["REQUEST_METHOD"];
+        $request = filter_var(trim($_SERVER["REQUEST_URI"], '/'), FILTER_SANITIZE_URL);
+        $this->route = explode('/', $request);
+        
     }
     private static $instance;
     /**
@@ -25,7 +25,7 @@ class HttpRequest
      */
     public static function instance(): HttpRequest
     {
-        if(!isset($instance)) $instance = new HttpRequest;
+        if(!isset(self::$instance)) { self::$instance = new HttpRequest; }
         return self::$instance;
     }
 }

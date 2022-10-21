@@ -1,7 +1,9 @@
 <?php
+require_once 'autoload.php';  
+Autoload::register();
 
 $env = 'dev';
-$_ENV = json_decode(file_get_contents("src/Configs/".$env.".config.json"), true);
+$_ENV = json_decode(file_get_contents("src/configs/".$env.".config.json"), true);
 $_ENV['env'] = $env;
 
 use controllers\ArtistController;
@@ -10,14 +12,23 @@ use controllers\CartController;
 use controllers\HomeController;
 use controllers\TopController;
 use controllers\AdminController;
+use controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 
-$request = HttpRequest::instance();
-HttpResponse::send(["method"=>$request->method, "route"=> $request->route]);
+// $request = HttpRequest::instance();
+// HttpResponse::send(["method"=>"$request->method", "route"=> $request->route]);
 
-    $data = "OK";
-    HttpResponse::send(["data"=>$data]);
+// $top = new TopController();
+// $admin = new AdminController();
+// $cart = new CartController();
+// $home = new HomeController();
+// $artist = new ArtistController();
+// $database = new DatabaseController();
+//     $data = "OK";
+//     HttpResponse::send(["data"=>$data]);
+
+
 
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -27,17 +38,11 @@ HttpResponse::send(["method"=>$request->method, "route"=> $request->route]);
     $route = array_shift($request);
        
     $controller = ucfirst($route);
-    $controllerName = $controller."Controller";
+    $controllerName = $controller.".controller";
     
     $method = $_SERVER['REQUEST_METHOD'];
     
 
-require_once 'autoload.php';
 
-
-    
-    require_once 'autoload.php';
-    Autoload::register();
-    $test = new ArtistController();
     
 ?>

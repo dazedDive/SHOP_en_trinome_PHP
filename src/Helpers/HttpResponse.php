@@ -13,8 +13,9 @@ class HttpResponse
     public static function send(array $data, int $status = 200): void
     {
         if ($status >= 300) self::exit();
+        http_response_code($status);
         echo(json_encode($data)); 
-        // http_response_code($status);
+        die;
         
     }
     /**
