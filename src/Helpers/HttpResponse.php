@@ -12,10 +12,10 @@ class HttpResponse
      */
     public static function send(array $data, int $status = 200): void
     {
-        $status = http_response_code();
         if ($status >= 300) self::exit();
-        http_response_code($status);
-        echo (json_encode('../configs/dev.config.json'));
+        echo(json_encode($data)); 
+        // http_response_code($status);
+        
     }
     /**
      * Cette méthode fixe le status code de la réponse HTTP (>=300)

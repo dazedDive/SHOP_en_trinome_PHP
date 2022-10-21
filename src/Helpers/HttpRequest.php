@@ -13,11 +13,10 @@ class HttpRequest
      */
     private function __construct()
     {
-
         $method = [$_SERVER("REQUEST_METHOD")];
         $route = explode('/', $_SERVER("REQUEST_URI"));
-        $result = array_merge($method, $route);
-        echo json_encode($result);
+        // $result = array_merge($method, $route);
+        // echo json_encode($result);
     }
     private static $instance;
     /**

@@ -1,5 +1,9 @@
 <?php
 
+$env = 'dev';
+$_ENV = json_decode(file_get_contents("src/Configs/".$env.".config.json"), true);
+$_ENV['env'] = $env;
+
 use controllers\ArtistController;
 use controllers\CollectionController;
 use controllers\CartController;
@@ -8,6 +12,9 @@ use controllers\TopController;
 use controllers\AdminController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+
+$request = HttpRequest::instance();
+HttpResponse::send(["method"=>$request->method, "route"=> $request->route]);
 
     $data = "OK";
     HttpResponse::send(["data"=>$data]);
@@ -24,6 +31,10 @@ use Helpers\HttpResponse;
     
     $method = $_SERVER['REQUEST_METHOD'];
     
+
+require_once 'autoload.php';
+
+
     
     require_once 'autoload.php';
     Autoload::register();
