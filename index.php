@@ -15,6 +15,7 @@ use controllers\AdminController;
 use controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+use Services\DatabaseService;
 
 // $request = HttpRequest::instance();
 // HttpResponse::send(["method"=>"$request->method", "route"=> $request->route]);
@@ -28,19 +29,25 @@ use Helpers\HttpResponse;
 //     $data = "OK";
 //     HttpResponse::send(["data"=>$data]);
 
+header("Access-Control-Allow-Origin: http://localhost:3000");
+
+$tables = DatabaseService :: getTables ();
+    if(count($tables)==0){
+        HttpResponse::exit();
+    }else{
+        HttpResponse::send($tables,200);
+    }
 
 
-    header("Access-Control-Allow-Origin: http://localhost:3000");
-
-    $request = trim($_SERVER['REQUEST_URI'],"/");
-    $request = filter_var($request , FILTER_SANITIZE_URL);
-    $request = explode("/",$request);
-    $route = array_shift($request);
+    // $request = trim($_SERVER['REQUEST_URI'],"/");
+    // $request = filter_var($request , FILTER_SANITIZE_URL);
+    // $request = explode("/",$request);
+    // $route = array_shift($request);
        
-    $controller = ucfirst($route);
-    $controllerName = $controller.".controller";
+    // $controller = ucfirst($route);
+    // $controllerName = $controller.".controller";
     
-    $method = $_SERVER['REQUEST_METHOD'];
+    // $method = $_SERVER['REQUEST_METHOD'];
     
 
 
