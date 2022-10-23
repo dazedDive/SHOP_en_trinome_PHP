@@ -2,7 +2,7 @@
     "db": {
         "host": "localhost",
         "port": "3306",
-        "dbName": "shop3.api",
+        "dbName": "shop3_api",
         "user": "admin",
         "pass": "admin"
     },

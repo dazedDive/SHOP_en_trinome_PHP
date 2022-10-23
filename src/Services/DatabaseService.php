@@ -7,7 +7,7 @@ class DatabaseService
     public string $table;
     public string $pk;
 
-    public function __construct(string $table = null)
+    public function __construct(string $table = "")
     {
         $this->table = $table;
         $this->pk = "id_" . $this->table;
@@ -42,8 +42,7 @@ class DatabaseService
             }
             catch (PDOException $e)
             {
-                die("Erreur de connexion à la base de données :
-                $e->getMessage()");
+                die("Erreur de connexion à la base de données : $e->getMessage");
             }
             self::$connection = $dbConnection;
         }
