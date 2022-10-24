@@ -1,55 +1,26 @@
 <?php
-require_once 'autoload.php';  
+require_once 'autoload.php';
 Autoload::register();
 
+header("Access-Control-Allow-Origin: http://localhost:3000");
+
 $env = 'dev';
-$_ENV = json_decode(file_get_contents("src/configs/".$env.".config.json"), true);
+$_ENV = json_decode(file_get_contents("src/configs/" . $env . ".config.json"), true);
 $_ENV['env'] = $env;
 
-use controllers\ArtistController;
-use controllers\CollectionController;
-use controllers\CartController;
-use controllers\HomeController;
-use controllers\TopController;
-use controllers\AdminController;
-use controllers\DatabaseController;
+use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
 use Services\DatabaseService;
 
-// $request = HttpRequest::instance();
-// HttpResponse::send(["method"=>"$request->method", "route"=> $request->route]);
+$request = HttpRequest::instance();
+$tables = DatabaseService::getTables();
+if (empty($request->route) || !in_array($request->route[0], $tables)) {
+    HttpResponse::exit();
+}
+$controller = new DatabaseController($request);
+$result = $controller->execute();
+HttpResponse::send(["data" => $result]);
 
-// $top = new TopController();
-// $admin = new AdminController();
-// $cart = new CartController();
-// $home = new HomeController();
-// $artist = new ArtistController();
-// $database = new DatabaseController();
-//     $data = "OK";
-//     HttpResponse::send(["data"=>$data]);
-
-header("Access-Control-Allow-Origin: http://localhost:3000");
-
-$tables = DatabaseService :: getTables ();
-    if(count($tables)==0){
-        HttpResponse::exit();
-    }else{
-        HttpResponse::send($tables,200);
-    }
-
-
-    // $request = trim($_SERVER['REQUEST_URI'],"/");
-    // $request = filter_var($request , FILTER_SANITIZE_URL);
-    // $request = explode("/",$request);
-    // $route = array_shift($request);
-       
-    // $controller = ucfirst($route);
-    // $controllerName = $controller.".controller";
-    
-    // $method = $_SERVER['REQUEST_METHOD'];
-    
-
-
-    
 ?>
+
