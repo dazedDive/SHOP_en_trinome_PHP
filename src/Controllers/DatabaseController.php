@@ -22,7 +22,8 @@ class DatabaseController
 
         if (isset($id)) $this->id = $id;
 
-        $this->body = http_response_code();
+        $this->body = [];
+        // $this->body = http_response_code();
 
         $this->action = $request->method;
     }
@@ -33,8 +34,8 @@ class DatabaseController
     public function execute(): ?array
     {
         if ($this->action == "GET") 
-        $rows = $this->action=$this->get($this->id);
-        return $rows;
+        return $rows = $this->action=$this->get($this->id);
+        
     }
 
     private function get(): ?array
