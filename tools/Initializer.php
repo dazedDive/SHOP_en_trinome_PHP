@@ -1,6 +1,11 @@
 <?php
 
+namespace Tools;
+
+
 use Services\DatabaseService;
+use Helpers\HttpRequest;
+use Exception;
 
 class Initializer
 {
@@ -22,35 +27,55 @@ class Initializer
         $tableFile = "src/Schemas/Table.php";
         if (file_exists($tableFile) && $isForce) {
             //Supprimer le fichier s’il existe
-            try{
+            try {
                 unlink($tableFile);
             }
             //Si la suppression ne fonctionne pas déclenche une Exception
-            catch(Exception $e){
-                echo "Exception levée: " . $e->getMessage();     
+            catch (Exception $e) {
+                echo "Exception levée: " . $e->getMessage();
             }
         }
-
 
         if (!file_exists($tableFile)) {
             //???
             //Créer le fichier (voir exemple ci dessous)
-            try{
+            try {
 
-                
-
-
-
+                $row = "<?php namespace Schemas; class Table{ ";
                 $file = fopen($tableFile, 'a');
-                fwrite($file, 'test');
+                fwrite($file, $row);
+
+
+                foreach ($tables as $nameFile) {
+                    $row = "const " . ucfirst($nameFile) . " = " . "'" . lcfirst($nameFile) . "'" . ";";
+                    $file = fopen($tableFile, 'a');
+                    fwrite($file, $row);
+                }
+                $file = fopen($tableFile, 'a');
+                fwrite($file, '}');
                 fclose($file);
             }
             //Si l’écriture ne fonctionne pas déclenche une Exception
-            catch(Exception $e){
-                echo "Exception levée: " . $e->getMessage();     
+            catch (Exception $e) {
+                echo "Exception levée: " . $e->getMessage();
             }
-
         }
         return $tables;
+    }
+    
+    /**
+     * Exécute la méthode writeTableFile
+     * Renvoie true si l'exécution s'est bien passée, false sinon
+     */
+    public static function start(HttpRequest $request): bool
+    {
+        $isForce = count($request->route) > 1 && $request->route[1] == 'force';
+        try {
+            $init = new Initializer;
+            $init->writeTableFile(true);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
     }
 }
