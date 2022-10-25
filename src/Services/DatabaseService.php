@@ -70,4 +70,14 @@ class DatabaseService{
         return $tables;
     }
 
+    /**
+    * Retourne les lignes correspondant à la condition where
+    */
+    public function selectWhere(string $where = "1", array $bind = []) : array
+    {
+        $sql ="SELECT * FROM $this->table WHERE $where";
+        $resp = $this->query($sql, $bind);
+        $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        return $rows;
+    }
 }

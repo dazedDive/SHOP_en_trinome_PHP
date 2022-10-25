@@ -7,7 +7,7 @@
 
     static function autoload($params){
      
-        require $params.".php";
+        require "src/".$params.".php";
     }
 
 }
