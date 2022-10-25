@@ -14,6 +14,7 @@ class DatabaseService
     {
         $this->table = $table;
         $this->pk = "Id_" . $this->table;
+
     }
 
     private static ?PDO $connection = null;

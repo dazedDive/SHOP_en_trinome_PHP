@@ -20,7 +20,7 @@ class DatabaseController
 
         if (isset($this->table)) $this->pk = "Id_" . $this->table;
 
-        if (isset($id)) $this->id = $id;
+        if (isset($request->route[1])) $this->id = $request->route[1];
 
         $this->body = [];
         // $this->body = http_response_code();
@@ -33,16 +33,15 @@ class DatabaseController
      */
     public function execute(): ?array
     {
-        if ($this->action == "GET") 
-        return $rows = $this->action=$this->get($this->id);
-        
+        if ($this->action == "GET")
+            return $this->get();
+
     }
 
     private function get(): ?array
     {
         // déterminer si l'URL contient un id
         $db = new DatabaseService($this->table);
-        $isId = $_GET['id'] ? true : false;
 
         /**
          * Action exécutée lors d'un GET
@@ -50,13 +49,14 @@ class DatabaseController
          * soit sous forme d'un tableau contenant toutes le lignes (si pas d'id)
          * soit sous forme du tableau associatif correspondant à une ligne (si id)
          */
-        if ($isId) {
+        if (isset($this->id)) {
             // retourner un tableau associatif correspondant à la ligne
             $getArray = $db->selectWhere($this->pk . "=", [$this->id]);
         } else {
             // retourner un tableau contenant toutes les lignes
-            $getArray = $db->selectWhere("is_deleted=", [0]);
+            $getArray = $db->selectWhere("is_deleted=?", [0]);
+             }
+            return $getArray;
         }
-        return $getArray;
     }
-}
+
