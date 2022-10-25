@@ -1,6 +1,7 @@
 <?php namespace Tools;
 
 use Exception;
+use Helpers\HttpRequest;
 use Services\DatabaseService;
 
 class Initializer{
@@ -51,7 +52,8 @@ public static function start(HttpRequest $request) : bool
 {
 $isForce = count($request->route) > 1 && $request->route[1] == 'force';
 try{
-//???
+HttpRequest::instance($request);
+Initializer::writeTableFile($isForce);
 }
 catch(Exception $e){
 return false;

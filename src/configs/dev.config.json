@@ -1,4 +1,5 @@
-{
+{   
+    "root":"src/",
     "db":{
         "host": "localhost",
         "port": "3306",
