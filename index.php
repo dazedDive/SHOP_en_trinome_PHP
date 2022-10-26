@@ -28,11 +28,13 @@ use Tools\Initializer;
     HttpResponse::send(["message"=>"API Not Initialized Try Again..."]);
     }
 
+   
+
     //STD ROUTES////////
     
     if(!empty($request->route)){
     $const =  strtoupper($request->route[0]);
-    $key = "Schemas\Table::$const" ;
+    $key = "Schemas\Table::$const";
     if(!defined($key)){
         HttpResponse::exit(404);
         }

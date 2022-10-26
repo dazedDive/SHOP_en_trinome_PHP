@@ -2,12 +2,12 @@
  
  class Table{ 
 
- CONST ACCOUNT = 'account';
- CONST CUSTOMER = 'customer';
- CONST DISPO = 'dispo';
- CONST FLIPPER = 'flipper';
- CONST IMAGE = 'image';
- CONST RESERVER = 'reserver';
- CONST STATISTIQUE = 'statistique';
+ CONST ACCOUNT='account';
+ CONST CUSTOMER='customer';
+ CONST DISPO='dispo';
+ CONST FLIPPER='flipper';
+ CONST IMAGE='image';
+ CONST RESERVER='reserver';
+ CONST STATISTIQUE='statistique';
  } 
  ?>
