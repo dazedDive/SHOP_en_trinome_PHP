@@ -1,6 +1,6 @@
 <?php
 require_once 'autoload.php';
-// Autoload::register();
+Autoload::register();
 
 header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -20,8 +20,9 @@ $_ENV['env'] = $env;
 // echo $schema->getSchema();
 
 // test
-$init = new Initializer;
-$init->writeSchemasFiles($tables, true);
+// $init = new Initializer;
+// $init->writeSchemasFiles($tables, true);
+$request = HttpRequest::instance();
 
 if (
     $_ENV['env'] == 'dev' && !empty($request->route) && $request->route[0] ==
@@ -55,7 +56,6 @@ if ($result) {
 // $init = new Initializer;
 // $init->writeTableFile(true);
 
-$request = HttpRequest::instance();
 $tables = DatabaseService::getTables();
 if (empty($request->route) || !in_array($request->route[0], $tables)) {
     HttpResponse::exit();

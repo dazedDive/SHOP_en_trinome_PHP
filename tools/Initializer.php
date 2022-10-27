@@ -88,7 +88,7 @@ class Initializer
     public static function writeSchemasFiles(array $tables, bool $isForce): void
     {
         foreach ($tables as $table) {
-            $className = ucfirst($table);
+            $className = strtoupper($table);
             $schemaFile = "src/Schemas/$className.php";
             if (file_exists($schemaFile) && $isForce) {
                 //Supprimer le fichier s’il existe

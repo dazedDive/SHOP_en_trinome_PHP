@@ -24,7 +24,7 @@ class HttpResponse
      */
     public static function exit(int $status = 404): void
     {
-        echo ($status);
+        http_response_code($status);
         die;
     }
 }

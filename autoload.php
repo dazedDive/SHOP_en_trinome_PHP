@@ -2,23 +2,25 @@
 class Autoload
 {
 
-    // static function register()
-    // {
-        //     spl_autoload_register(array(__CLASS__, 'autoloader'));
-    // }
+    static function register()
+    {
+            spl_autoload_register(array(__CLASS__, 'autoloader'));
+    }
     
+    private static function formatLinux($params){
+        // valable pour les systèmes de type UNIX (Linux, BSD, MacOS, Solaris...)
+        $filePath = $_ENV['db']['root'] . str_replace('\\', '/', $params) . '.php';;
+        return $filePath;
+    }
     
     static function autoloader($className)
     {
         // valable pour Windows
         // require 'src'.$params.".php";
         
-        // valable pour les systèmes de type UNIX (Linux, BSD, MacOS, Solaris...)
-        // $file = 'src/' . str_replace('\\', '/', $params) . '.php';
-        // if (file_exists($file))
-        //     require_once $file;
         
-        $classPath = $_ENV['root'] . "$className.php";
+        // $classPath = $_ENV['db']['root'] . "$className.php";
+        $classPath = Self::formatLinux($className);
         if (file_exists($classPath)) {
             require_once $classPath;
         }
@@ -26,6 +28,6 @@ class Autoload
         if (file_exists($toolsPath)) {
             require_once $toolsPath;
         }
-        spl_autoload_register("autoload");
+        // spl_autoload_register("autoload");
     }
 }
