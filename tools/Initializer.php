@@ -21,7 +21,7 @@ class Initializer
      * Si $isForce vaut false et que la classe existe déjà, elle n'est pas réécrite
      * Si $isForce vaut true, la classe est supprimée (si elle existe) et réécrite
      */
-    private static function writeTableFile(bool $isForce = false): array
+    public static function writeTableFile(bool $isForce = false): array
     {
         $tables = DatabaseService::getTables();
         $tableFile = "src/Schemas/Table.php";

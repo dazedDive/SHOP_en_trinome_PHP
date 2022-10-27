@@ -53,8 +53,8 @@ if ($result) {
 }
 
 // test
-// $init = new Initializer;
-// $init->writeTableFile(true);
+$init = new Initializer;
+$init->writeTableFile(true);
 
 $tables = DatabaseService::getTables();
 if (empty($request->route) || !in_array($request->route[0], $tables)) {
