@@ -14,7 +14,6 @@ class DatabaseService
     {
         $this->table = $table;
         $this->pk = "Id_" . $this->table;
-
     }
 
     private static ?PDO $connection = null;
@@ -81,6 +80,17 @@ class DatabaseService
         $resp = $this->query($sql, $bind);
         $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
         return $rows;
+    }
 
+    /**
+     * Retourne la liste des colonnes d'une table (son schéma)
+     */
+    public function getSchema()
+    {
+        $schemas = [];
+        $sql = "SHOW FULL COLUMNS FROM $this->table";
+        $resp = $this->query($sql);
+        $schemas = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        return $schemas;
     }
 }
