@@ -3,11 +3,11 @@
  class Table{ 
 
  CONST ACCOUNT='account';
+ CONST ARTIST_KID='artist_kid';
+ CONST COLLECTION='collection';
+ CONST COMMAND='command';
  CONST CUSTOMER='customer';
- CONST DISPO='dispo';
- CONST FLIPPER='flipper';
- CONST IMAGE='image';
- CONST RESERVER='reserver';
- CONST STATISTIQUE='statistique';
+ CONST DRAWING='drawing';
+ CONST IMAGES='images';
  } 
  ?>

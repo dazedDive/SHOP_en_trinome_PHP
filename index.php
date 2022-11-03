@@ -3,6 +3,8 @@
 use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+use Models\Model;
+use Models\ModelList;
 use Schemas\Table;
 use Services\DatabaseService;
 use Tools\Initializer;
@@ -28,6 +30,13 @@ use Tools\Initializer;
     HttpResponse::send(["message"=>"API Not Initialized Try Again..."]);
     }
 
+   $test1 = ["Id_drawing"=>"1gieh2f99b60heb8","name"=>"un new dessin"];
+   $test2 = ["name"=>"un autre dessin"];
+   
+   $dbs= new DatabaseService('drawing');
+   $testdata = $dbs->insertOrUpdate([$test1]);
+   $testdata;
+   
    
 
     //STD ROUTES////////

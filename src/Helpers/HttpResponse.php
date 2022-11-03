@@ -10,7 +10,7 @@ public static function send( array $data , int $status = 200 ) : void
     http_response_code($status);
     $response = json_encode($data);
     echo($response);
-    die;
+    // die;
 }
 
 public static function exit ( int $status = 404 ) : void

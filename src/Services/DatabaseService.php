@@ -2,6 +2,7 @@
 
 use PDO;
 use PDOException;
+use Models\ModelList;
 
 class DatabaseService{
     public string $table;
@@ -87,5 +88,46 @@ class DatabaseService{
         $resp = $this->query($sql);
         $schemas = $resp->statment->fetchAll(PDO::FETCH_CLASS);
         return $schemas ;
+        }
+
+   
+
+    public function insertOrUpdate ( array $body ) : ? array
+        {
+        //créer un ModelList à partir du body de la requête
+        $modelList = new ModelList($this->table,$body);
+        //récupérer en DB les lignes de la table dont l'id est dans $modelList->items
+        $idToBind = $modelList->idList($this->items[$this->pk]);
+        $dbs= new DatabaseService($this->table);
+        $existingRowsList=$dbs->selectWhere("Id_".$this->table."=?", $idToBind) ;
+        if(count($existingRowsList)==0){
+            return "faut faire un create";
+        }else{
+             
+            //créer un ModelList avec les lignes existantes
+            $existingModelsList = new ModelList($this->table,$existingRowsList);
+            $existingModelsList;
+
+        }
+        //construire la requête sql et le tableau de valeurs
+        //pour insérer les lignes qui n'existent pas en DB
+        //construire la requête sql et le tableau des valeurs
+        //pour mettre à jour les lignes existantes en DB
+        //il est possible de ne faire qu'une seule requête
+        //pour la mise à jour et l'insertion
+        //INSERT ... ON DUPLICATE KEY UPDATE ...
+        //exécuter la ou les requête(s)
+        //renvoyer un tableau contenant toutes les lignes (insérées et mises à jour)
+        //renvoyer null si le résultat de la ou des requête(s) :
+        //$this->query($sql, $valuesToBind) vaut false
+        $sql = "???" ;
+        $valuesToBind = [ "" , "" , "" ];
+        $resp = $this -> query ( $sql , $valuesToBind );
+        if ( $resp -> result ) {
+        //???
+        }
+        return null ;
+        
+        return null ;
         }
 }

@@ -56,4 +56,10 @@
            return $result;
         }
 
-    }
+        // private function put () : ? array
+        // {
+        //     $dbs = new DatabaseService ( $this -> table );
+        //     $rows = $dbs -> insertOrUpdate ( $this -> body ); 
+
+        // }
+}
