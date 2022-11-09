@@ -1,0 +1,15 @@
+{
+    "name": "david/shop3.api",
+    "autoload": {
+        "psr-4": {
+            "David\\Shop3Api\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Bécu",
+            "email": "david.macnimo@outloock.fr"
+        }
+    ],
+    "require": {}
+}

@@ -1,14 +1,13 @@
-<?php
+<?php namespace Schemas; 
+ 
+ class Table{ 
 
-namespace Schemas;
-
-class Table
-{
-    const Artist_kid = 'artist_kid';
-    const Images = 'images';
-    const Account = 'account';
-    const Command = 'command';
-    const Collection = 'collection';
-    const Drawing = 'drawing';
-    const Customer = 'customer';
-}
+ CONST ACCOUNT='account';
+ CONST ARTIST_KID='artist_kid';
+ CONST COLLECTION='collection';
+ CONST COMMAND='command';
+ CONST CUSTOMER='customer';
+ CONST DRAWING='drawing';
+ CONST IMAGES='images';
+ } 
+ ?>
