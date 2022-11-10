@@ -30,15 +30,20 @@ use Tools\Initializer;
     HttpResponse::send(["message"=>"API Not Initialized Try Again..."]);
     }
 
-   $test1 = ["Id_drawing"=>"1gieh2f99b60heb8","name"=>"un new dessin"];
-   $test2 = ["name"=>"un autre dessin"];
+//    $test1 = ["Id_drawing"=>"1gieh2f99b60heb8","name"=>"un new dessin"];
+//    $test2 = ["name"=>"un autre dessin"];
    
-   $dbs= new DatabaseService('drawing');
-   $testdata = $dbs->insertOrUpdate([$test1]);
-   $testdata;
+//    $dbs= new DatabaseService('drawing');
+//    $testdata = $dbs->insertOrUpdate([$test1]);
+//    $testdata;
    
-   
-
+   use Helpers\Token;
+   $tokenFromDataArray = Token::create(["name"=>"Bob","id"=>""]);
+   $encoded = $tokenFromDataArray->encoded;
+   $tokenTestFromString = Token::create($encoded);
+   $decoded=$tokenTestFromString->decoded;
+   $test= $tokenTestFromString->isValid();
+   $bp=true;
     //STD ROUTES////////
     
     if(!empty($request->route)){

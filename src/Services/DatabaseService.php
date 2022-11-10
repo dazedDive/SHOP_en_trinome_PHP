@@ -1,5 +1,6 @@
 <?php namespace Services;
 
+use Models\Model;
 use PDO;
 use PDOException;
 use Models\ModelList;
@@ -78,7 +79,7 @@ class DatabaseService{
     {
         $sql ="SELECT * FROM $this->table WHERE $where";
         $resp = $this->query($sql, $bind);
-        $rows = $resp->statment->fetchAll(PDO::FETCH_CLASS);
+        $rows = $resp->statment->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
 
@@ -92,22 +93,39 @@ class DatabaseService{
 
    
 
-    public function insertOrUpdate ( array $body ) : ? array
+        public function insertOrUpdate(array $body) : ?array
         {
-        //créer un ModelList à partir du body de la requête
-        $modelList = new ModelList($this->table,$body);
-        //récupérer en DB les lignes de la table dont l'id est dans $modelList->items
-        $idToBind = $modelList->idList($this->items[$this->pk]);
-        $dbs= new DatabaseService($this->table);
-        $existingRowsList=$dbs->selectWhere("Id_".$this->table."=?", $idToBind) ;
-        if(count($existingRowsList)==0){
-            return "faut faire un create";
-        }else{
-             
-            //créer un ModelList avec les lignes existantes
-            $existingModelsList = new ModelList($this->table,$existingRowsList);
-            $existingModelsList;
-
+            $modelList = new ModelList($this->table, $body['items']);
+            $inClause = trim(str_repeat("?,", count($modelList->items)), ",");
+            $existingRowsList = $this->selectWhere("$this->pk IN ($inClause)", $modelList->idList());
+            $existingModelList = new ModelList($this->table, $existingRowsList);
+            $valuesToBind = [];
+            foreach($modelList->items as &$model){
+                $existingModel = $existingModelList->findById($model->{$this->pk});
+                foreach ( $body['items'] as $item ) {
+                    if (isset($item[$this->pk]) && $model->{$this->pk} == $item[$this->pk] ) {
+                        $model = new Model($this->table, array_merge((array)$existingModel, $item));
+                    }
+                }
+                $valuesToBind = array_merge($valuesToBind, array_values($model->data()));
+            }
+            $columns = array_keys(Model::getSchema($this->table));
+            $values = "(" . trim(str_repeat("?,", count($columns)), ',') . "),";
+            $valuesClause = trim(str_repeat($values, count($body["items"])), ',');
+            $columnsClause = implode(",", $columns);
+            $fieldsToUpdate = array_diff($columns, array($this->pk, "is_deleted"));
+            $updatesClause = "";
+            foreach ($fieldsToUpdate as $field) {
+                $updatesClause .= "$field = VALUES($field), ";
+            }
+            $updatesClause = rtrim($updatesClause, ", ");
+            $sql = "INSERT INTO $this->table ($columnsClause) VALUES $valuesClause ON DUPLICATE KEY UPDATE $updatesClause";
+            $resp = $this->query($sql, $valuesToBind);
+            if ($resp->result) {
+                $rows = $this->selectWhere("$this->pk IN ($inClause)", $modelList->idList());
+                return $rows;
+            }
+            return null;
         }
         //construire la requête sql et le tableau de valeurs
         //pour insérer les lignes qui n'existent pas en DB
@@ -120,14 +138,34 @@ class DatabaseService{
         //renvoyer un tableau contenant toutes les lignes (insérées et mises à jour)
         //renvoyer null si le résultat de la ou des requête(s) :
         //$this->query($sql, $valuesToBind) vaut false
-        $sql = "???" ;
-        $valuesToBind = [ "" , "" , "" ];
-        $resp = $this -> query ( $sql , $valuesToBind );
-        if ( $resp -> result ) {
-        //???
-        }
-        return null ;
+        // $sql = "???" ;
+        // $valuesToBind = [ "" , "" , "" ];
+        // $resp = $this -> query ( $sql , $valuesToBind );
+        // if ( $resp -> result ) {
+        // //???
+        // }
+        // return null ;
         
-        return null ;
+        // return null ;
+        // }
+
+        public function softDelete(array $body) : ? array{
+            $set="is_deleted=?";
+            $modelList = new ModelList($this->table,$body["items"]);
+            $idsToBind = $modelList->idList();
+            $inClausetab=[];
+            foreach($idsToBind as $idToBind){
+            $sql ="UPDATE $this->table SET $set WHERE $this->pk=?";
+            $valuesToBind = [1,$idToBind];
+            $resp = $this->query($sql, $valuesToBind);
+            array_push($inClausetab,"?");
+            }
+            if ($resp->result){
+                $inClause=implode(",",$inClausetab);
+                $rows=$this->selectWhere("$this->pk IN ($inClause)",$idsToBind);
+                return $rows;
+            }
+            return null;
         }
+    
 }

@@ -14,7 +14,7 @@ class Model
     {
         $this->table = $table;
         $this->pk = "Id_" . $this->table;
-        $this->schema = self::getSchema($this->table);
+        $this->schema = self::getSchema($table);
         if (!isset($json[$this->pk])) {
             $json[$this->pk] = $this->nextGuid();
         }
@@ -37,7 +37,7 @@ class Model
      * correspondant à $table sous forme de tableau associatif
      * (classe Schemas généré au sprint 4)
      */
-    public function getSchema(string $table): array
+    public static function getSchema(string $table): array
     {
         $schemaName = "Schemas\\" . ucfirst($table);
         return $schemaName::COLUMNS;
@@ -74,11 +74,9 @@ class Model
     public function data(): array
     {
         $data = (array) clone $this;
-        foreach ($data as  $key=>$value) {
-            if (!isset($this->schema[$key])) {
-                unset($data[$key]);
-            }
-        }
+        unset($data['table']);
+        unset($data['pk']);
+        unset($data['schema']);
         return $data;
     }
 }

@@ -31,16 +31,10 @@ class ModelList
      */
     public function data () : array
     {
-        $data = (array) clone $this;
-        foreach($this->items as $item){
-        foreach ($item as  $key=>$value) {
-            if (!isset($this->schema[$key])) {
-                unset($data[$key]);
-                }
-            }
-        array_push($this->items,$item);
-        }
-        return $data;
+        $result = array_map(function($item){
+            return $item->data();
+        }, $this->items);     
+        return $result;
     }
     /**
     * Renvoie la liste des id contenus dans $this->items

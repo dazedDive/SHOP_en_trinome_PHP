@@ -1,6 +1,8 @@
 <?php namespace Controllers;
     use Services\DatabaseService;
     use Helpers\HttpRequest;
+use Helpers\HttpResponse;
+
     class DatabaseController
     {
         private string $table;
@@ -23,8 +25,9 @@
                 $this->pk = "Id_".$this->table;
             }
 
-            // $request_body = file_get_contents('php://input');
-            $this->body = [];
+            $request_body = file_get_contents('php://input');
+            $this->body = $request_body ? json_decode($request_body, true) : null;
+            
                   
             $this->action=$request->method;
             
@@ -32,10 +35,14 @@
         
         public function execute() : ?array
         {
-            if($this->action=="GET"){
-                return $this->get();
-            }
-           
+            // if($this->action=="GET"){
+            //     return $this->get();
+            // }
+            // if($this->action=="PUT"){
+            //     return $this->put();
+            // }
+            $action=strtolower($this->action);
+            return self::$action();
             
         }
         /**
@@ -56,10 +63,17 @@
            return $result;
         }
 
-        // private function put () : ? array
-        // {
-        //     $dbs = new DatabaseService ( $this -> table );
-        //     $rows = $dbs -> insertOrUpdate ( $this -> body ); 
+        private function put ()
+        {
+            $dbs = new DatabaseService ( $this -> table );
+            $rows = $dbs -> insertOrUpdate ( $this -> body ); 
+            return $rows;
+        }
 
-        // }
+        private function patch(){
+            $dbs = new DatabaseService($this->table);
+            $rows = $dbs->softDelete( $this -> body);
+            return $rows;
+        }
+        
 }
