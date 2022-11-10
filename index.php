@@ -1,21 +1,22 @@
 <?php
-// use Controllers\DatabaseController;
-// use Helpers\HttpRequest;
-// use Helpers\HttpResponse;
-// use Models\Model;
-// use Models\ModelList;
-// use Schemas\Table;
-// use Services\DatabaseService;
-// use Tools\Initializer;
-
-require_once 'vendor/autoload.php';
+use Controllers\DatabaseController;
 use Helpers\HttpRequest;
 use Helpers\HttpResponse;
+use Models\Model;
+use Models\ModelList;
+use Schemas\Table;
 use Services\DatabaseService;
 use Tools\Initializer;
-use Controllers\DatabaseController;
+require_once 'autoload.php';
 
-//autoload::register();
+// require_once 'vendor/autoload.php';
+// use Helpers\HttpRequest;
+// use Helpers\HttpResponse;
+// use Services\DatabaseService;
+// use Tools\Initializer;
+// use Controllers\DatabaseController;
+
+autoload::register();
 
 header("Access-Control-Allow-Origin: http://localhost:3000");
 $env = 'dev';/////a changer pour modifier la config general/////////
